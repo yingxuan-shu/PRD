@@ -368,26 +368,26 @@ public class Solution {
 				int startNoeudMidi = listNoeudPartir.get(k);
 //				System.out.println("Départ Noeud Midi : " + startNoeudMidi);
 
-				long startMidi = System.currentTimeMillis();
+//				long startMidi = System.currentTimeMillis();
 				calculerRestoMidi(i, nbjour, startNoeudMidi, mapArriverMidi, listResultatRoute, 
 						listArcSize, nbNoeud, distance_max, distance_min);
-				long endMidi = System.currentTimeMillis();
-				System.out.println("Midi -> " + (endMidi - startMidi) + " ms");
+//				long endMidi = System.currentTimeMillis();
+//				System.out.println("Midi -> " + (endMidi - startMidi) + " ms");
 				
-				long startSoir = System.currentTimeMillis();
+//				long startSoir = System.currentTimeMillis();
 				calculerRestoSoir(i, nbjour, mapArriverMidi, mapArriverSoir, listResultatRoute, 
 						listArcSize, nbNoeud, distance_max, distance_min, listNoeudArriverSoir);
-				long endSoir = System.currentTimeMillis();
-				System.out.println("Soir -> " + (endSoir - startSoir) + " ms");
+//				long endSoir = System.currentTimeMillis();
+//				System.out.println("Soir -> " + (endSoir - startSoir) + " ms");
 				
-				long startNuit = System.currentTimeMillis();
+//				long startNuit = System.currentTimeMillis();
 				calculerHotelNuit(i, nbjour, mapArriverMidi, mapArriverSoir, mapArriverNuit, 
 						listResultatRoute, listArcSize, nbNoeud, distance_max, distance_min, listNoeudArriverNuit);
-		        long endNuit = System.currentTimeMillis();
-				System.out.println("Nuit -> " + (endNuit - startNuit) + " ms");
+//		        long endNuit = System.currentTimeMillis();
+//				System.out.println("Nuit -> " + (endNuit - startNuit) + " ms");
 
 				
-//				System.out.println("Aujourd'hui ");
+// 				System.out.println("Aujourd'hui ");
 //				Calculate today's feasible paths, and write paths in listNoeudRouteJour
 				noeudRoute.noeudRouteJour(i,mapArriverMidi, mapArriverSoir, mapArriverNuit, listResultatRoute, 
 							listResultat, distance_max, distance_min);
