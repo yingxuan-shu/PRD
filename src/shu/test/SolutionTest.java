@@ -58,11 +58,7 @@ public class SolutionTest {
 	public void testCalculer() {
 		List<List<Integer>> listResultat = new ArrayList<>();
 		listResultat = solution.calculer();
-//		List<List<Integer>> listResultatTest = new ArrayList<>();
-//		listResultatTest = {{0, 3, 5},{0, 4, 5},{null, 2, 1},{0, 3, 5}};
-//		AssertArrayEquals(listResultatTest, listResultat);
 		assertNotNull(listResultat);
-//		assertSame(listResultatTest, listResultat);
 	}
 
 }
