@@ -83,6 +83,7 @@ public class Solution {
 	 * @param nbNoeud The total number of nodes
 	 * @param distance_max The maximum distance
 	 * @param distance_min The minimum distance
+	 * @param listNoeudArriverMidi A list of temporary feasible nodes every noon, each node can be arriver only one time every noon
 	 */
 	public void calculerRestoMidi(int today, int nbjour, int startNoeudMidi, 
 			Map<Integer, Integer> mapArriverMidi, List<List<Integer>> listResultatRoute, 
