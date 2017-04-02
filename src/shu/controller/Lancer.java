@@ -13,7 +13,7 @@ public class Lancer {
 	public static void main(String[] args) throws Exception {
 
 		// The data for testing
-//		String filePath = "./data/jour1_noeud312.csv";
+//		String filePath = "./data/jour2_noeud312.csv";
 //		String filePath = "./data/jour1_noeud1439.csv";
 			
 		

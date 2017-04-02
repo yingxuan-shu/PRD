@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Create a graph with nodes and edges
+ * Create a graph with parameters, nodes and edges
  * @author shuyingxuan
  *
  */

@@ -86,7 +86,8 @@ public class Solution {
 	 */
 	public void calculerRestoMidi(int today, int nbjour, int startNoeudMidi, 
 			Map<Integer, Integer> mapArriverMidi, List<List<Integer>> listResultatRoute, 
-			int listArcSize, int nbNoeud, double distance_max, double distance_min){
+			int listArcSize, int nbNoeud, double distance_max, double distance_min, 
+			List<Integer> listNoeudArriverMidi){
 
 		int tempsArriver = 0; 
 		// If the start node isn't the finish node 
@@ -113,37 +114,43 @@ public class Solution {
 //								 If this node is the end node, it has already arrived at the end node
 								|| (today == nbjour && arriverNoeudMidi.getId() == nbNoeud-1)){
 
-							int flag = 1;
-//							// time restart = lunch time + arrive time 
-							int tempsPartir = tempsArriver + graphe.getHeure_resto_midi();
-							if(mapArriverMidi.size() > 0 ){
-								Iterator<Map.Entry<Integer, Integer>> iterator = mapArriverMidi.entrySet().iterator();
-								while (iterator.hasNext()) {
-									Map.Entry<Integer, Integer> entry = iterator.next();
-									if(graphe.getArcById(entry.getKey()).getNoeud_end() == arc.getNoeud_end()){
-										if(entry.getValue() > tempsPartir){
-											flag = 2;
-											iterator.remove();
-										} else {
-											flag = -1;
-										}
-										
-									} else {
-										flag = 1;
-									}
-								}
-							}		
-							
-							// If flag is 1, map dosen't have this edge, add this edge and its tempsArriver
-							// If flag is 2, map already has this edge, but this new tempsArriver 
-							//  				is bettter than old tempsArriver, it need to replace 
-							// If flag is -1, map already has this edge, but this new tempsArriver 
-							//  				is worse than old tempsArriver, do nothing
-							if(flag == 1){
+							if(!listNoeudArriverMidi.contains(arc.getNoeud_end())){
+								int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
 								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
-							} else if(flag == 2){
-								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
+								listNoeudArriverMidi.add(arc.getNoeud_end());
 							}
+							
+//							int flag = 1;
+////							// time restart = lunch time + arrive time 
+//							int tempsPartir = tempsArriver + graphe.getHeure_resto_midi();
+//							if(mapArriverMidi.size() > 0 ){
+//								Iterator<Map.Entry<Integer, Integer>> iterator = mapArriverMidi.entrySet().iterator();
+//								while (iterator.hasNext()) {
+//									Map.Entry<Integer, Integer> entry = iterator.next();
+//									if(graphe.getArcById(entry.getKey()).getNoeud_end() == arc.getNoeud_end()){
+//										if(entry.getValue() > tempsPartir){
+//											flag = 2;
+//											iterator.remove();
+//										} else {
+//											flag = -1;
+//										}
+//										
+//									} else {
+//										flag = 1;
+//									}
+//								}
+//							}		
+//							
+//							// If flag is 1, map dosen't have this edge, add this edge and its tempsArriver
+//							// If flag is 2, map already has this edge, but this new tempsArriver 
+//							//  				is bettter than old tempsArriver, it need to replace 
+//							// If flag is -1, map already has this edge, but this new tempsArriver 
+//							//  				is worse than old tempsArriver, do nothing
+//							if(flag == 1){
+//								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
+//							} else if(flag == 2){
+//								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
+//							}
 //							System.out.println("!!! Midi count: " + count);	
 						}
 					}
@@ -342,7 +349,7 @@ public class Solution {
 		for(int i=1; i <= nbjour; i++){
 			// A list of temporary results connected within all feasible node paths for whole travel
 			List<List<Integer>> listResultatRoute = new ArrayList<>(); 
-//			List<Integer> listNoeudArriverMidi = new ArrayList<>();
+			List<Integer> listNoeudArriverMidi = new ArrayList<>();
 			// A list of temporary feasible nodes every afternoon, each node can be arriver only one time every afternoon
 			List<Integer> listNoeudArriverSoir = new ArrayList<>(); 
 			// A list of temporary feasible nodes every night, each node can be arriver only one time every night
@@ -370,7 +377,7 @@ public class Solution {
 
 //				long startMidi = System.currentTimeMillis();
 				calculerRestoMidi(i, nbjour, startNoeudMidi, mapArriverMidi, listResultatRoute, 
-						listArcSize, nbNoeud, distance_max, distance_min);
+						listArcSize, nbNoeud, distance_max, distance_min, listNoeudArriverMidi);
 //				long endMidi = System.currentTimeMillis();
 //				System.out.println("Midi -> " + (endMidi - startMidi) + " ms");
 				
