@@ -56,6 +56,7 @@ public class NoeudRoute {
 					listNoeudRouteMidi.add(graphe.getArcById(entry.getKey()).getNoeud_end());
 					listNoeudRouteMidi.add(graphe.getArcById(entry.getKey()).getNoeud_start());
 
+//					System.out.println("!!!endNoeud: " + endNoeud);	
 					if(nbjour == today){						
 //						print.printNoeudRouteList(listNoeudRouteMidi);
 						calResultat.calculerResultat(today, listNoeudRouteMidi, listResultatRoute, listResultat);
@@ -106,6 +107,7 @@ public class NoeudRoute {
 					calResultat.calculerResultat(today,listNoeudRouteSoir, listResultatRoute, listResultat);
 					}
 //					listNoeudRouteSoir.clear();
+//					System.out.println("!!!endNoeud: " + endNoeud);	
 				}
 			}	
 		}
@@ -162,6 +164,8 @@ public class NoeudRoute {
 							}
 						}
 					}
+					
+					
 				}	
 			}
 		}
@@ -184,7 +188,7 @@ public class NoeudRoute {
 	public void noeudRouteJour(int today, Map<Integer, Integer> mapArriverMidi, 
 			Map<Integer, Integer> mapArriverSoir, Map<Integer, Integer> mapArriverNuit, 
 			List<List<Integer>> listResultatRoute, List<List<Integer>> listResultat, 
-			double distance_max, double distance_min){
+			double distance_max, double distance_min,  int endNoeud, int nbjour){
 
 		if(mapArriverNuit.size() > 0) {
 			int noeudJour;
@@ -217,15 +221,25 @@ public class NoeudRoute {
 									
 //									if(noeudJour2 == noeudRoute2){
 									if(noeudJour2 == noeudRoute2 && distanceJour >= distance_min
-												&& distanceJour <= distance_max){
-										listNoeudRouteJour.add(graphe.getArcById(entryMidi.getKey()).getNoeud_start());
-										calResultat.calculerResultat(today, listNoeudRouteJour, listResultatRoute, listResultat);	
-//										print.printNoeudRouteList(listNoeudRouteJour);
+											&& distanceJour <= distance_max){
+
+										if(today < nbjour){
+
+											listNoeudRouteJour.add(graphe.getArcById(entryMidi.getKey()).getNoeud_start());
+											calResultat.calculerResultat(today, listNoeudRouteJour, listResultatRoute, listResultat);	
+//											print.printNoeudRouteList(listNoeudRouteJour);
+										} else if(graphe.getArcById(entry.getKey()).getNoeud_end() == endNoeud
+												&& today == nbjour) {
+											listNoeudRouteJour.add(graphe.getArcById(entryMidi.getKey()).getNoeud_start());
+											calResultat.calculerResultat(today, listNoeudRouteJour, listResultatRoute, listResultat);	
+//											print.printNoeudRouteList(listNoeudRouteJour);
+										} 
+
 									}
 								}
 							}
 						}
-					}
+					} 
 				}
 			}	
 		}

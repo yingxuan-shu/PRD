@@ -109,11 +109,31 @@ public class Solution {
 					arriverNoeudMidi = graphe.getNoeudById(arc.getNoeud_end());
 
 					if(tempsArriver <= graphe.getHeure_max_resto_midi()) {
+//						if(today == nbjour){
+//							if(arriverNoeudMidi.getId() == nbNoeud-1)
+////									&& (arriverNoeudMidi.getIsResto() == 0 
+////									&& arriverNoeudMidi.getIsHotel() == 0
+//									{
+////								mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
+//								
+//								if(!listNoeudArriverMidi.contains(arc.getNoeud_end())){
+////									int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
+//									mapArriverMidi.put(arc.getIdArc(), -1);
+//									listNoeudArriverMidi.add(arc.getNoeud_end());
+////									System.out.println("!!! nbNoeud: " + nbNoeud);	
+//								}
+//								
+//							}
+//						}
+						
+						
+						
 						if((tempsArriver >= graphe.getHeure_min_resto_midi() 
 								&& arriverNoeudMidi.getIsResto() == 1
 								&& arc.getDistance() > distance_min/8.5*3.5)
 //								 If this node is the end node, it has already arrived at the end node
-								|| (today == nbjour && arriverNoeudMidi.getId() == nbNoeud-1)){
+								|| (today == nbjour && arriverNoeudMidi.getId() == nbNoeud-1)
+								){
 
 							if(!listNoeudArriverMidi.contains(arc.getNoeud_end())){
 								int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
@@ -215,10 +235,28 @@ public class Solution {
 							arriverNoeudSoir = graphe.getNoeudById(arc.getNoeud_end());
 
 							if(tempsArriver <= graphe.getHeure_max_resto_soir()-100){
+//								if(today == nbjour){
+//									if(arriverNoeudSoir.getId() == nbNoeud-1) 
+////											&& (arriverNoeudMidi.getIsResto() == 0 
+////											&& arriverNoeudMidi.getIsHotel() == 0
+//											{
+////										mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
+//										
+//										if(!listNoeudArriverSoir.contains(arc.getNoeud_end())){
+////											int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
+//											mapArriverSoir.put(arc.getIdArc(), -1);
+//											listNoeudArriverSoir.add(arc.getNoeud_end());
+//										}
+//										
+//									}
+//								}
+								
+								
 								if((tempsArriver >= graphe.getHeure_min_resto_soir() 
 										&& arriverNoeudSoir.getIsResto() == 1
 										&& arc.getDistance() > distance_min/8.5*3.5)
-										|| (today == nbjour && arriverNoeudSoir.getId() == nbNoeud-1)){
+										|| (today == nbjour && arriverNoeudSoir.getId() == nbNoeud-1)
+										){
 //									System.out.println("Heure d'arrivée soir : " + tempsArriver);
 									
 									if(!listNoeudArriverSoir.contains(arc.getNoeud_end())){
@@ -274,7 +312,7 @@ public class Solution {
 				int startNoeudNuit = graphe.getArcById(entry.getKey()).getNoeud_end();
 				int arcStart = graphe.getArcById(entry.getKey()).getNoeud_start();
 				if(startNoeudNuit > 0 && startNoeudNuit < nbNoeud-1){
-					// Calculate from the start node line, the start node is tne end node of each edge
+					// Calculate from the start node line, the start node is the end node of each edge
 					int temp = entry.getKey()+nbNoeud*(startNoeudNuit-arcStart)-startNoeudNuit;
 					for(int i=temp; i<listArcSize; i++){
 						
@@ -291,9 +329,27 @@ public class Solution {
 							arriverNoeudNuit = graphe.getNoeudById(arc.getNoeud_end());
 
 							if(tempsArriver <= graphe.getHeure_max_hotel()-100){
+								
+//								if(today == nbjour){
+//									if(arriverNoeudNuit.getId() == nbNoeud-1) 
+////											&& (arriverNoeudMidi.getIsResto() == 0 
+////											&& arriverNoeudMidi.getIsHotel() == 0
+//										{
+////										mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
+//										
+//										if(!listNoeudArriverNuit.contains(arc.getNoeud_end())){
+////											int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
+//											mapArriverNuit.put(arc.getIdArc(), -1);
+//											listNoeudArriverNuit.add(arc.getNoeud_end());
+//										}
+//										
+//									}
+//								}
+								
 								if((arriverNoeudNuit.getIsHotel() == 1
 										&& arc.getDistance() > distance_min/8.5*3.5) 
-										|| ((today == nbjour) && (arriverNoeudNuit.getId() == nbNoeud-1))){
+										|| ((today == nbjour) && (arriverNoeudNuit.getId() == nbNoeud-1))
+										){
 
 									if(!listNoeudArriverNuit.contains(arc.getNoeud_end())){
 										mapArriverNuit.put(arc.getIdArc(), tempsArriver);
@@ -397,10 +453,10 @@ public class Solution {
 				
 // 				System.out.println("Aujourd'hui ");
 //				Calculate today's feasible paths, and write paths in listNoeudRouteJour
-				noeudRoute.noeudRouteJour(i,mapArriverMidi, mapArriverSoir, mapArriverNuit, listResultatRoute, 
-							listResultat, distance_max, distance_min);
+				noeudRoute.noeudRouteJour(i, mapArriverMidi, mapArriverSoir, mapArriverNuit, listResultatRoute, 
+							listResultat, distance_max, distance_min, nbNoeud-1, nbjour);
 			}
-			// Get thw list of results connected within all feasible node paths for whole travel
+			// Get the list of results connected within all feasible node paths for whole travel
 			if(i > 1){
 				listResultat = listResultatRoute;
 			}
