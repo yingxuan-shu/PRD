@@ -10,7 +10,7 @@ import java.util.List;
  * @author shuyingxuan
  *
  */
-public class CalculerResultat {
+public class CalculerResultat implements CalculerResultatInterface{
 
 	/**
 	 * The node path is converted in sequence

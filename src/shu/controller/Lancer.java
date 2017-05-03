@@ -3,6 +3,7 @@ package shu.controller;
 import shu.dao.DAO;
 import shu.model.Graphe;
 import shu.solution.Solution;
+import shu.solution.SolutionInterface;
 
 /**
  * Run the program
@@ -26,7 +27,7 @@ public class Lancer {
 		Graphe graphe = new Graphe(DAO.readTxtFile(filePath));
 		// Print the entire graph
 //		graphe.print();
-		Solution solution = new Solution(graphe);
+		SolutionInterface solution = new Solution(graphe);
 		
 		// Calculate results and write these results in a file
 		DAO.writeTxtFile(solution.calculer(), filePath);

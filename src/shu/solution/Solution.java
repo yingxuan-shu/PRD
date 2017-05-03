@@ -2,7 +2,6 @@ package shu.solution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,17 +15,17 @@ import shu.model.Noeud;
  * @author shuyingxuan
  *
  */
-public class Solution {
+public class Solution implements SolutionInterface{
 //	Create a graph with nodes and edges
 	Graphe graphe = new Graphe();
 //	 A list of all feasible node paths for whole travel
 	List<List<Integer>> listResultat = new ArrayList<>();
 //	Choose better solutions using less price, more distance and less insecurity
-	ChoisirSolution choisirSolution;
+	ChoisirSolutionInterface choisirSolution;
 //	Calculate today's feasible paths, and write paths in a list
-	NoeudRoute noeudRoute;
+	NoeudRouteInterface noeudRoute;
 //	Print the information or the results
-	Print print;
+	PrintInterface print;
 	
 	/**
 	 * Constructs a new Solution with graph
@@ -108,26 +107,7 @@ public class Solution {
 					Noeud arriverNoeudMidi = new Noeud();
 					arriverNoeudMidi = graphe.getNoeudById(arc.getNoeud_end());
 
-					if(tempsArriver <= graphe.getHeure_max_resto_midi()) {
-//						if(today == nbjour){
-//							if(arriverNoeudMidi.getId() == nbNoeud-1)
-////									&& (arriverNoeudMidi.getIsResto() == 0 
-////									&& arriverNoeudMidi.getIsHotel() == 0
-//									{
-////								mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
-//								
-//								if(!listNoeudArriverMidi.contains(arc.getNoeud_end())){
-////									int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
-//									mapArriverMidi.put(arc.getIdArc(), -1);
-//									listNoeudArriverMidi.add(arc.getNoeud_end());
-////									System.out.println("!!! nbNoeud: " + nbNoeud);	
-//								}
-//								
-//							}
-//						}
-						
-						
-						
+					if(tempsArriver <= graphe.getHeure_max_resto_midi()) {						
 						if((tempsArriver >= graphe.getHeure_min_resto_midi() 
 								&& arriverNoeudMidi.getIsResto() == 1
 								&& arc.getDistance() > distance_min/8.5*3.5)
@@ -135,11 +115,18 @@ public class Solution {
 								|| (today == nbjour && arriverNoeudMidi.getId() == nbNoeud-1)
 								){
 
+//							int count = 0;
 							if(!listNoeudArriverMidi.contains(arc.getNoeud_end())){
 								int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
 								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
 								listNoeudArriverMidi.add(arc.getNoeud_end());
-							}
+							} 
+//							else if(count < 20){
+//								count++;
+//								int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
+//								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
+//								listNoeudArriverMidi.add(arc.getNoeud_end());
+//							}
 							
 //							int flag = 1;
 ////							// time restart = lunch time + arrive time 
@@ -152,6 +139,7 @@ public class Solution {
 //										if(entry.getValue() > tempsPartir){
 //											flag = 2;
 //											iterator.remove();
+//											count++;
 //										} else {
 //											flag = -1;
 //										}
@@ -169,6 +157,7 @@ public class Solution {
 //							//  				is worse than old tempsArriver, do nothing
 //							if(flag == 1){
 //								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
+//								
 //							} else if(flag == 2){
 //								mapArriverMidi.put(arc.getIdArc(), tempsPartir);
 //							}
@@ -212,7 +201,7 @@ public class Solution {
 
 		int tempsArriver = 0; 
 
-		if(mapArriverMidi.size() > 0 && mapArriverMidi.size() < 10000) {
+		if(mapArriverMidi.size() > 0) {
 			
 			for (Map.Entry<Integer, Integer> entry: mapArriverMidi.entrySet()) {  
 				// The start node this afternoon
@@ -234,24 +223,7 @@ public class Solution {
 							Noeud arriverNoeudSoir = new Noeud();
 							arriverNoeudSoir = graphe.getNoeudById(arc.getNoeud_end());
 
-							if(tempsArriver <= graphe.getHeure_max_resto_soir()-100){
-//								if(today == nbjour){
-//									if(arriverNoeudSoir.getId() == nbNoeud-1) 
-////											&& (arriverNoeudMidi.getIsResto() == 0 
-////											&& arriverNoeudMidi.getIsHotel() == 0
-//											{
-////										mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
-//										
-//										if(!listNoeudArriverSoir.contains(arc.getNoeud_end())){
-////											int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
-//											mapArriverSoir.put(arc.getIdArc(), -1);
-//											listNoeudArriverSoir.add(arc.getNoeud_end());
-//										}
-//										
-//									}
-//								}
-								
-								
+							if(tempsArriver <= graphe.getHeure_max_resto_soir()-100){	
 								if((tempsArriver >= graphe.getHeure_min_resto_soir() 
 										&& arriverNoeudSoir.getIsResto() == 1
 										&& arc.getDistance() > distance_min/8.5*3.5)
@@ -306,7 +278,7 @@ public class Solution {
 
 		int tempsArriver = 0; 		
 
-		if(mapArriverSoir.size() > 0  && mapArriverSoir.size() < 20000) {
+		if(mapArriverSoir.size() > 0) {
 			for (Map.Entry<Integer, Integer> entry: mapArriverSoir.entrySet()) {  
 				// The start node this night
 				int startNoeudNuit = graphe.getArcById(entry.getKey()).getNoeud_end();
@@ -329,23 +301,6 @@ public class Solution {
 							arriverNoeudNuit = graphe.getNoeudById(arc.getNoeud_end());
 
 							if(tempsArriver <= graphe.getHeure_max_hotel()-100){
-								
-//								if(today == nbjour){
-//									if(arriverNoeudNuit.getId() == nbNoeud-1) 
-////											&& (arriverNoeudMidi.getIsResto() == 0 
-////											&& arriverNoeudMidi.getIsHotel() == 0
-//										{
-////										mapArriverMidi.put(arc.getIdArc(), -1); // 到达终点，不出发了
-//										
-//										if(!listNoeudArriverNuit.contains(arc.getNoeud_end())){
-////											int tempsPartir = tempsArriver + graphe.getHeure_resto_soir();
-//											mapArriverNuit.put(arc.getIdArc(), -1);
-//											listNoeudArriverNuit.add(arc.getNoeud_end());
-//										}
-//										
-//									}
-//								}
-								
 								if((arriverNoeudNuit.getIsHotel() == 1
 										&& arc.getDistance() > distance_min/8.5*3.5) 
 										|| ((today == nbjour) && (arriverNoeudNuit.getId() == nbNoeud-1))

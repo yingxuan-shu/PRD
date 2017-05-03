@@ -15,7 +15,7 @@ import shu.model.Graphe;
  * @author shuyingxuan
  *
  */
-public class ChoisirSolution {
+public class ChoisirSolution implements ChoisirSolutionInterface{
 	
 //	Create a graph with nodes and edges
 	Graphe graphe = new Graphe();

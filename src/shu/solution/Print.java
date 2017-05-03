@@ -11,7 +11,7 @@ import shu.model.Graphe;
  * @author shuyingxuan
  *
  */
-public class Print {
+public class Print implements PrintInterface{
 //	Create a graph with nodes and edges
 	Graphe graphe = new Graphe();
 

@@ -18,7 +18,13 @@ import java.util.List;
  * @author shuyingxuan
  *
  */
-public class DAO {
+public class DAO implements DAOInterface{
+	/**
+	 * Read datas from the file csv
+	 * 
+	 * @param filePath The path of the file
+	 * @return get all the data in the file
+	 */
 	public static List<List<String>> readTxtFile(String filePath) {
 		// A list of parameters set in the 1st line of data list
 		List<String> list1 = new ArrayList<String>();

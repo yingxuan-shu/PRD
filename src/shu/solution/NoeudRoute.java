@@ -12,13 +12,13 @@ import shu.model.Graphe;
  * @author shuyingxuan
  *
  */
-public class NoeudRoute {
+public class NoeudRoute implements NoeudRouteInterface{
 //	Create a graph with nodes and edges
 	Graphe graphe = new Graphe();
 //	Print the information or the results
-	Print print;
+	PrintInterface print;
 //	Use the list data with node paths to calculate and treat for getting the results
-	CalculerResultat calResultat;
+	CalculerResultatInterface calResultat;
 	
 	/**
 	 *  Constructs a new Print with graph
